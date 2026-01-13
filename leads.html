@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads</title>
+    <link rel="stylesheet" href="leads.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">FollowUp Manager</div>
+            <ul class="nav-links">
+                <li><a href="leads.html">Leads</a></li>
+                <li><a href="add-lead.html">Add Lead</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="body-container">
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search by name or phone">
+            <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="Closed">Closed</option>
+            </select>
+        </div>
+
+        <table class="table-container">
+            <thead>
+                <tr>
+                    <th>SNo</th>
+                    <th>Name</th>
+                    <th>PhoneNo</th>
+                    <th>FollowUp-date</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+
+                </tr>
+            </thead>
+            <tbody class="table-body">
+                <tr>
+                    <td>1</td>
+                    <td>Lokesh Gundapaneni</td>
+                    <td>9346154313</td>
+                    <td>15/01</td>
+                    <td>New</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 FollowUp Manager | Built by Lokesh</p>
+    </footer>
+
+    <script src="leads.js"></script>
+</body>
+
+</html>

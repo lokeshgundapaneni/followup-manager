@@ -1,0 +1,102 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #000;
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding-bottom: 2px;
+}
+
+.nav-links a:hover {
+    border-bottom: 2px solid white;
+}
+
+body {
+    background-color: rgb(223, 166, 91);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.table-container {
+    margin: 40px auto;
+    border: 2px solid black;
+    width: 45rem;
+    text-align: center;
+    background-color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    font-size: 1.3rem;
+    background-color: rgb(132, 165, 154);
+    padding: 12px;
+}
+
+td {
+    font-size: 1.1rem;
+    background-color: #e8eef0;
+    padding: 10px;
+}
+
+tr:hover td {
+    background-color: #d6e1e5;
+    cursor: pointer;
+}
+
+.footer {
+    width: 100%;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 0.9rem;
+}
+
+/* filter and search */
+
+
+.controls {
+    width: 42rem;
+    margin: 20px auto;
+    display: flex;
+    gap: 10px;
+}
+
+.controls input,
+.controls select {
+    padding: 8px;
+    font-size: 1rem;
+    flex: 1;
+}
+

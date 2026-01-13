@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Lead</title>
+    <link rel="stylesheet" href="add-lead.css">
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">FollowUp Manager</div>
+        <ul class="nav-links">
+            <li><a href="leads.html">Leads</a></li>
+            <li><a href="add-lead.html">Add Lead</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="image-container"> </div>
+
+<main class="content">
+    <form id="add-lead-form">
+        <h2 id="add-lead-head">Add Lead</h2>
+
+        <label for="lead-name">Name</label>
+        <input type="text" id="lead-name" required>
+
+        <label for="lead-no">Phone</label>
+        <input type="text" id="lead-no" required>
+
+        <label for="lead-req">Requirement</label>
+        <textarea id="lead-req"></textarea>
+
+        <label for="followup-date">Follow-up Date</label>
+        <input type="date" id="followup-date">
+
+        <label for="status-selection">Status</label>
+        <select id="status-selection">
+            <option>New</option>
+            <option>Contacted</option>
+            <option>Closed</option>
+        </select>
+
+        <button type="submit">Save Lead</button>
+    </form>
+</main>
+
+<footer class="footer">
+    <p>© 2026 FollowUp Manager | Built by Lokesh</p>
+</footer>
+<script src="add-leads.js"></script>
+</body>
+</html>
