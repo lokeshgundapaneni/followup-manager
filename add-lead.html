@@ -1,56 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Lead</title>
-    <link rel="stylesheet" href="add-lead.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FollowUp Manager — Add Lead</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 40px;
+      width: 90%;
+      max-width: 480px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-title {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+
+    .edit-notice {
+      display: none;
+      background: rgba(124,111,205,0.1);
+      border: 1px solid rgba(124,111,205,0.2);
+      color: var(--accent2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+    .edit-notice.show { display: block; }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 7px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.93rem;
+      padding: 12px 14px;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    textarea { resize: vertical; min-height: 85px; }
+    select option { background: var(--surface2); }
+
+    .status-pills {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .pill {
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      transition: all 0.18s;
+    }
+
+    .pill[data-value="New"].active       { border-color: var(--success); color: var(--success); background: rgba(74,222,128,0.1); }
+    .pill[data-value="Contacted"].active { border-color: var(--warning); color: var(--warning); background: rgba(251,191,36,0.1); }
+    .pill[data-value="Closed"].active    { border-color: var(--danger);  color: var(--danger);  background: rgba(248,113,113,0.1); }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-cancel {
+      flex: 1;
+      padding: 13px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 12px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .btn-cancel:hover { color: var(--text); border-color: var(--accent); }
+
+    .btn-save {
+      flex: 2;
+      padding: 13px;
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-save:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
 <body>
 
-<header>
+  <header>
     <nav class="navbar">
-        <div class="logo">FollowUp Manager</div>
-        <ul class="nav-links">
-            <li><a href="leads.html">Leads</a></li>
-            <li><a href="add-lead.html">Add Lead</a></li>
-            <li><a href="index.html">Logout</a></li>
-        </ul>
+      <div class="logo">FollowUp Manager</div>
+      <ul class="nav-links">
+        <li><a href="leads.html">Leads</a></li>
+        <li><a href="add-lead.html" class="active">Add Lead</a></li>
+        <li><a href="index.html" id="logout-btn">Logout</a></li>
+      </ul>
     </nav>
-</header>
-<div class="image-container"> </div>
+  </header>
 
-<main class="content">
-    <form id="add-lead-form">
-        <h2 id="add-lead-head">Add Lead</h2>
+  <main>
+    <div class="form-card">
+      <h1 class="form-title" id="form-title">Add Lead</h1>
 
-        <label for="lead-name">Name</label>
-        <input type="text" id="lead-name" required>
+      <div class="edit-notice" id="edit-notice">You are editing an existing lead.</div>
 
-        <label for="lead-no">Phone</label>
-        <input type="text" id="lead-no" required>
+      <form id="add-lead-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="lead-name">Name *</label>
+            <input type="text" id="lead-name" placeholder="Ravi Kumar" required>
+          </div>
+          <div class="field">
+            <label for="lead-no">Phone *</label>
+            <input type="tel" id="lead-no" placeholder="9876543210" required>
+          </div>
+        </div>
 
-        <label for="lead-req">Requirement</label>
-        <textarea id="lead-req"></textarea>
+        <div class="field">
+          <label for="lead-email">Email</label>
+          <input type="email" id="lead-email" placeholder="ravi@example.com">
+        </div>
 
-        <label for="followup-date">Follow-up Date</label>
-        <input type="date" id="followup-date">
+        <div class="field">
+          <label for="lead-req">Requirement</label>
+          <textarea id="lead-req" placeholder="What is the lead looking for?"></textarea>
+        </div>
 
-        <label for="status-selection">Status</label>
-        <select id="status-selection">
-            <option>New</option>
-            <option>Contacted</option>
-            <option>Closed</option>
-        </select>
+        <div class="field">
+          <label for="followup-date">Follow-up Date</label>
+          <input type="date" id="followup-date">
+        </div>
 
-        <button type="submit">Save Lead</button>
-    </form>
-</main>
+        <div class="field">
+          <label>Status</label>
+          <div class="status-pills">
+            <div class="pill active" data-value="New">New</div>
+            <div class="pill" data-value="Contacted">Contacted</div>
+            <div class="pill" data-value="Closed">Closed</div>
+          </div>
+          <input type="hidden" id="status-hidden" value="New">
+        </div>
 
-<footer class="footer">
+        <div class="form-actions">
+          <a href="leads.html" class="btn-cancel">Cancel</a>
+          <button type="submit" class="btn-save" id="save-btn">Save Lead</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="footer">
     <p>© 2026 FollowUp Manager | Built by Lokesh</p>
-</footer>
-<script src="add-leads.js"></script>
+  </footer>
+
+  <script src="add-leads.js"></script>
 </body>
 </html>

@@ -1,68 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leads</title>
-    <link rel="stylesheet" href="leads.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FollowUp Manager — Leads</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
+    main {
+      flex: 1;
+      padding: 32px 40px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 22px;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--accent); }
+
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-family: var(--font-head);
+      font-size: 1.9rem;
+      font-weight: 800;
+    }
+
+    .stat-card.s-total .stat-value     { color: var(--text); }
+    .stat-card.s-new .stat-value       { color: var(--success); }
+    .stat-card.s-contacted .stat-value { color: var(--warning); }
+    .stat-card.s-closed .stat-value    { color: var(--danger); }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      flex: 1;
+      min-width: 180px;
+      position: relative;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 11px 14px 11px 38px;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-wrap input:focus { border-color: var(--accent); }
+    .search-wrap input::placeholder { color: var(--muted); }
+
+    .filter-select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      padding: 11px 14px;
+      border-radius: 10px;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-select option { background: var(--surface); }
+
+    .btn-add {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      font-family: var(--font-head);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 11px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .btn-add:hover { opacity: 0.85; }
+
+    .table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead tr { border-bottom: 1px solid var(--border); }
+
+    th {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      padding: 14px 18px;
+      text-align: left;
+    }
+
+    td {
+      padding: 14px 18px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .lead-name  { font-weight: 600; }
+    .lead-phone { color: var(--muted); font-size: 0.83rem; }
+    .lead-email { color: var(--muted); font-size: 0.8rem; }
+
+    .status-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .s-badge-new       { background: rgba(74,222,128,0.1);  color: var(--success); border: 1px solid rgba(74,222,128,0.25); }
+    .s-badge-contacted { background: rgba(251,191,36,0.1);  color: var(--warning); border: 1px solid rgba(251,191,36,0.25); }
+    .s-badge-closed    { background: rgba(248,113,113,0.1); color: var(--danger);  border: 1px solid rgba(248,113,113,0.25); }
+
+    .action-cell { display: flex; gap: 8px; }
+
+    .overdue   { color: var(--danger); font-weight: 500; }
+    .due-today { color: var(--warning); font-weight: 500; }
+    .upcoming  { color: var(--muted); }
+
+    .empty-state {
+      text-align: center;
+      padding: 56px 20px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 2.4rem; margin-bottom: 10px; }
+
+    @media (max-width: 700px) {
+      main { padding: 20px 16px 60px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
 <body>
 
-    <header>
-        <nav class="navbar">
-            <div class="logo">FollowUp Manager</div>
-            <ul class="nav-links">
-                <li><a href="leads.html">Leads</a></li>
-                <li><a href="add-lead.html">Add Lead</a></li>
-                <li><a href="index.html">Logout</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav class="navbar">
+      <div class="logo">FollowUp Manager</div>
+      <ul class="nav-links">
+        <li><a href="leads.html" class="active">Leads</a></li>
+        <li><a href="add-lead.html">Add Lead</a></li>
+        <li><a href="index.html" id="logout-btn">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main class="body-container">
-        <div class="controls">
-            <input type="text" id="searchInput" placeholder="Search by name or phone">
-            <select id="statusFilter">
-                <option value="all">All</option>
-                <option value="New">New</option>
-                <option value="Contacted">Contacted</option>
-                <option value="Closed">Closed</option>
-            </select>
-        </div>
+  <main>
+    <div class="stats-row">
+      <div class="stat-card s-total">
+        <div class="stat-label">Total</div>
+        <div class="stat-value" id="stat-total">0</div>
+      </div>
+      <div class="stat-card s-new">
+        <div class="stat-label">New</div>
+        <div class="stat-value" id="stat-new">0</div>
+      </div>
+      <div class="stat-card s-contacted">
+        <div class="stat-label">Contacted</div>
+        <div class="stat-value" id="stat-contacted">0</div>
+      </div>
+      <div class="stat-card s-closed">
+        <div class="stat-label">Closed</div>
+        <div class="stat-value" id="stat-closed">0</div>
+      </div>
+    </div>
 
-        <table class="table-container">
-            <thead>
-                <tr>
-                    <th>SNo</th>
-                    <th>Name</th>
-                    <th>PhoneNo</th>
-                    <th>FollowUp-date</th>
-                    <th>Status</th>
-                    <th>Delete</th>
+    <div class="controls">
+      <div class="search-wrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search by name or phone...">
+      </div>
+      <select class="filter-select" id="statusFilter">
+        <option value="all">All Status</option>
+        <option value="New">New</option>
+        <option value="Contacted">Contacted</option>
+        <option value="Closed">Closed</option>
+      </select>
+      <a href="add-lead.html" class="btn-add">+ Add Lead</a>
+    </div>
 
-                </tr>
-            </thead>
-            <tbody class="table-body">
-                <tr>
-                    <td>1</td>
-                    <td>Lokesh Gundapaneni</td>
-                    <td>9346154313</td>
-                    <td>15/01</td>
-                    <td>New</td>
-                    <td>Edit</td>
-                    <td>Delete</td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Lead</th>
+            <th>Requirement</th>
+            <th>Follow-up</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </main>
 
-    <footer class="footer">
-        <p>© 2026 FollowUp Manager | Built by Lokesh</p>
-    </footer>
+  <footer class="footer">
+    <p>© 2026 FollowUp Manager | Built by Lokesh</p>
+  </footer>
 
-    <script src="leads.js"></script>
+  <script src="leads.js"></script>
 </body>
-
 </html>

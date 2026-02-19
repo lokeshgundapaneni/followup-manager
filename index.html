@@ -1,31 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FollowUp Manager — Login</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 40px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-title {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .login-sub {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 32px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 7px;
+    }
+
+    input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.93rem;
+      padding: 12px 14px;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    input::placeholder { color: var(--muted); }
+
+    .error-box {
+      display: none;
+      background: rgba(248,113,113,0.1);
+      border: 1px solid rgba(248,113,113,0.25);
+      color: var(--danger);
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+    }
+    .error-box.show { display: block; }
+
+    .login-btn {
+      width: 100%;
+      padding: 13px;
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .login-btn:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 18px;
+    }
+    .hint span { color: var(--accent2); }
+  </style>
 </head>
-
 <body>
-    <div class="image-container">
-        
-    </div>
-    <form action="" id="login-form">
-        <h2 id="login-head">LOGIN</h2>
 
-        <label for="Email">Email:</label><br>
-        <input type="email" id="Email" placeholder="Enter the Email"><br><br>
+  <div class="login-card">
+    <h1 class="login-title">Welcome back</h1>
+    <p class="login-sub">Sign in to manage your leads</p>
 
-        <label for="Password">Password:</label><br>
-        <input type="password" id="Password" placeholder="Enter the Password"><br><br>
+    <div class="error-box" id="error-box">Invalid email or password.</div>
 
-        <a href="add-lead.html">
-            <button>Login</button>
-        </a>
+    <form id="login-form">
+      <div class="field">
+        <label for="Email">Email</label>
+        <input type="email" id="Email" placeholder="admin@gmail.com" required>
+      </div>
+      <div class="field">
+        <label for="Password">Password</label>
+        <input type="password" id="Password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="login-btn">Sign In</button>
     </form>
-    <script src="index.js"></script>
-</body>
 
+    <p class="hint">Demo: <span>admin@gmail.com</span> / <span>admin123</span></p>
+  </div>
+
+  <script src="index.js"></script>
+</body>
 </html>
